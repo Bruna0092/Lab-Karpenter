@@ -1,26 +1,40 @@
+# Lab Karpenter Basico
+
 ## Terraform:
 terraform init
 
 ## Para realizar a criação da VPC:
+```
 terraform plan -target=module.vpc -var-file="main.tfvars"
 terraform apply -target=module.vpc -var-file="main.tfvars"
+```
 
 ## Para realizar a criação do cluster EKS:
+```
 terraform plan -target=module.eks -var-file="main.tfvars"
 terraform apply -target=module.eks -var-file="main.tfvars"
+```
 
 ## Para criar tudo:
+```
 terraform plan -var-file="main.tfvars"
 terraform apply -var-file="main.tfvars"
+```
 
 ## Criação de uma Service-Linked Role para o serviço AWS Spot:
+```
 aws iam create-service-linked-role --aws-service-name spot.amazonaws.com --region us-east-1 || true
+```
 
 ## Obter o acesso ao cluster:
+```
 aws --profile seu-profile eks update-kubeconfig --region us-east-1 --name cluster-karpenter
+```
 
 # Acompanhar os logs do Kerpenter:
+```
 kubectl -n karpenter logs -l app.kubernetes.io/name=karpenter --all-containers=true -f --tail=20
+```
 
 ## Instalação do eks-node-viewer, que permite visualizar os nodes do cluster EKS:
 ```
@@ -37,13 +51,19 @@ alias eks-node-viewer='$HOME/go/bin/eks-node-viewer'
 ```
 
 ## Criar o NodePool:
+```
 kubectl apply -f karpenter-manifestos/NodePool.yaml
+```
 
 ## Teste - Aplicar a criação do inflate:
+```
 kubectl apply -f karpenter-manifestos/inflate.yaml
+```
 
 ## Alterar a quantidade de replicas para aumentar o diminuir os nodes:
+```
 kubectl scale deployment inflate --replicas=1 -n default
+```
 
 ## Remover toda a infra vpc\eks:
 terraform destroy -var-file="main.tfvars"
