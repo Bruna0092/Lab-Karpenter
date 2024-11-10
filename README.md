@@ -10,6 +10,7 @@ Este lab tem a intenção de demonstrar o funcionamento basico do Karpenter e se
 
 ## Terraform:
 ```
+cd main
 terraform init
 ```
 
