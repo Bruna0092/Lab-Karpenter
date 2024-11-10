@@ -1,0 +1,67 @@
+apiVersion: karpenter.sh/v1
+kind: NodePool
+metadata:
+  name: spot
+  annotations:
+    kubernetes.io/description: "NodePool for provisioning spot capacity"
+spec:
+  template:
+    metadata:
+      labels:
+        intent: apps
+    spec:
+      nodeClassRef:
+        group: karpenter.k8s.aws
+        kind: EC2NodeClass
+        name: default
+      expireAfter: 336h
+      terminationGracePeriod: 24h
+      requirements:
+        - key: karpenter.sh/capacity-type
+          operator: In
+          values: ["spot"]
+        - key: "karpenter.k8s.aws/instance-family"
+          operator: In
+          values: ["t3a", "t3", "m5"]
+        - key: karpenter.k8s.aws/instance-size
+          operator: In
+          values: ["small", "medium", "large"]
+        - key: "topology.kubernetes.io/zone"
+          operator: In
+          values: ["us-east-1a", "us-east-1b"]
+  disruption:
+    consolidationPolicy: WhenEmptyOrUnderutilized
+    consolidateAfter: 0s
+---
+apiVersion: karpenter.k8s.aws/v1
+kind: EC2NodeClass
+metadata:
+  name: default
+spec:
+  kubelet:
+    systemReserved:
+      cpu: 100m
+      memory: 100Mi
+      ephemeral-storage: 1Gi
+    kubeReserved:
+      cpu: 200m
+      memory: 100Mi
+      ephemeral-storage: 3Gi
+  amiSelectorTerms:
+    - alias: al2023@v20241106
+  subnetSelectorTerms:          
+    - tags:
+        karpenter.sh/discovery: "cluster-karpenter"
+  securityGroupSelectorTerms:
+    - tags:
+        karpenter.sh/discovery: "cluster-karpenter"
+    - name: eks_default_sg_nodes
+  role: "eks-node-group"
+  metadataOptions:
+    httpEndpoint: enabled
+    httpPutResponseHopLimit: 2
+    httpTokens: required
+  tags:
+    Name: karpenter.sh/nodepool/cluster-karpenter
+    NodeType: "spot"
+    IntentLabel: "apps"
