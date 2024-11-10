@@ -59,11 +59,17 @@ source $HOME/.bashrc
 go version
 go install github.com/awslabs/eks-node-viewer/cmd/eks-node-viewer@latest
 alias eks-node-viewer='$HOME/go/bin/eks-node-viewer'
+
+Visualizar CPU e Memoria
+eks-node-viewer --resources cpu,memory
 ```
 
 ## Criar o NodePool:
 ```
 kubectl apply -f karpenter-manifestos/NodePool.yaml
+
+# Verifique se esta ready, caso contrario as instancias não serão criadas.
+kubectl get ec2nodeclass
 ```
 
 ## Teste - Aplicar a criação do inflate:
@@ -73,7 +79,7 @@ kubectl apply -f karpenter-manifestos/inflate.yaml
 
 ## Alterar a quantidade de replicas para aumentar o diminuir os nodes:
 ```
-kubectl scale deployment inflate --replicas=1 -n default
+kubectl scale deployment inflate --replicas=10 -n default
 ```
 
 ## Remover toda a infra vpc\eks:
