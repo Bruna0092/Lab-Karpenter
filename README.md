@@ -1,7 +1,17 @@
 # Lab Karpenter básico
 
+Este lab tem a intenção de demonstrar o funcionamento basico do Karpenter e seu provisionamento "automatico" com o terraform.
+
+## Pré requisitos
+-Terraform
+-Helm
+-Kubectl
+-Conta IAM Admin para provisionar os recursos com terraform
+
 ## Terraform:
+```
 terraform init
+```
 
 ## Para realizar a criação da VPC:
 ```
