@@ -1,4 +1,4 @@
-# Lab Karpenter Basico
+# Lab Karpenter básico
 
 ## Terraform:
 terraform init
