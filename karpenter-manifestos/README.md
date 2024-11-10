@@ -38,6 +38,8 @@ template:
 ```
 
 ## NodeClass
+Link: https://karpenter.sh/v1.0/concepts/nodeclasses/
+
 No NodeClass você irá configurar reservas dos pods do sistema, seleção de AMI, role, subnets e outros. São opções mais voltadas as configurações da instancia.
 
 Na configuração, adicionei uma reserva para os pods do sistema:
