@@ -76,4 +76,6 @@ kubectl scale deployment inflate --replicas=1 -n default
 ```
 
 ## Remover toda a infra vpc\eks:
+```
 terraform destroy -var-file="main.tfvars"
+```
