@@ -23,7 +23,7 @@ aws --profile seu-profile eks update-kubeconfig --region us-east-1 --name cluste
 kubectl -n karpenter logs -l app.kubernetes.io/name=karpenter --all-containers=true -f --tail=20
 
 ## Instalação do eks-node-viewer, que permite visualizar os nodes do cluster EKS:
-'''
+´´´
 Link: https://go.dev/doc/install
 Download: wget  https://go.dev/dl/go1.23.3.linux-amd64.tar.gz
 
@@ -34,7 +34,7 @@ source $HOME/.bashrc
 go version
 go install github.com/awslabs/eks-node-viewer/cmd/eks-node-viewer@latest
 alias eks-node-viewer='$HOME/go/bin/eks-node-viewer'
-'''
+´´´
 
 ## Criar o NodePool:
 kubectl apply -f karpenter-manifestos/NodePool.yaml
