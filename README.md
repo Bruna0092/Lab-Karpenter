@@ -48,7 +48,8 @@ kubectl -n karpenter logs -l app.kubernetes.io/name=karpenter --all-containers=t
 
 ## Instalação do eks-node-viewer, que permite visualizar os nodes do cluster EKS:
 ```
-Link: https://go.dev/doc/install
+Link instalação go: https://go.dev/doc/install
+link instalação eks-node-viewer: https://github.com/awslabs/eks-node-viewer
 Download: wget  https://go.dev/dl/go1.23.3.linux-amd64.tar.gz
 
 sudo rm -rf /usr/local/go
