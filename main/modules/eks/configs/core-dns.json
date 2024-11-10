@@ -1,0 +1,6 @@
+{
+  "replicaCount": 1,
+  "nodeSelector": {
+    "use": "management"
+  }
+}

@@ -1,0 +1,63 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "Karpenter",
+            "Action": [
+                "ssm:GetParameter",
+                "iam:PassRole",
+                "iam:GetInstanceProfile",
+                "iam:CreateInstanceProfile",
+                "iam:TagInstanceProfile",
+                "iam:RemoveRoleFromInstanceProfile",
+                "iam:AddRoleToInstanceProfile",
+                "iam:DeleteInstanceProfile",
+                "pricing:GetProducts",
+                "ec2:DescribeSpotPriceHistory",
+                "ec2:RunInstances",
+                "ec2:DescribeSubnets",
+                "ec2:DescribeSecurityGroups",
+                "ec2:DescribeLaunchTemplates",
+                "ec2:DescribeInstances",
+                "ec2:DescribeInstanceTypes",
+                "ec2:DescribeInstanceTypeOfferings",
+                "ec2:DescribeAvailabilityZones",
+                "ec2:DeleteLaunchTemplate",
+                "ec2:CreateTags",
+                "ec2:CreateLaunchTemplate",
+                "ec2:CreateFleet",
+                "ec2:DescribeImages"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Sid": "ConditionalEC2Termination",
+            "Action": "ec2:TerminateInstances",
+            "Effect": "Allow",
+            "Resource": "*",
+            "Condition": {
+                "StringLike": {
+                    "ec2:ResourceTag/Name": "*karpenter*"
+                }
+            }
+        },
+        {
+            "Sid": "EksPermissions",
+            "Action": "eks:DescribeCluster",
+            "Effect": "Allow",
+            "Resource": "*"
+        },
+        {
+            "Sid": "SQSPermissions",
+            "Action": [
+                "sqs:DeleteMessage", 
+                "sqs:GetQueueUrl", 
+                "sqs:GetQueueAttributes", 
+                "sqs:ReceiveMessage"
+            ],
+            "Effect": "Allow",
+            "Resource": "*"
+        }
+    ]
+}

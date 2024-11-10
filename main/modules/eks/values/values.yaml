@@ -1,0 +1,19 @@
+settings:
+  clusterName: "cluster-karpenter"
+  interruptionQueue: "cluster-karpenter-sqs"
+
+serviceAccount:
+  create: true
+  name: "karpenter"
+  annotations:
+    eks.amazonaws.com/role-arn: arn:aws:iam::451821666126:role/karpenter-controller-role
+
+aws:
+  defaultInstanceProfile: "Karpenter-Node-InstanceProfile"
+
+replicas: 1
+
+nodeSelector:
+  use: "management"
+
+tolerations: []
