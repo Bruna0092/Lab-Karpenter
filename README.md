@@ -83,7 +83,15 @@ kubectl apply -f karpenter-manifestos/inflate.yaml
 kubectl scale deployment inflate --replicas=10 -n default
 ```
 
-## Remover toda a infra vpc\eks:
+## ⚠️⚠️ Remover toda a infra vpc\eks: 
 ```
 terraform destroy -var-file="main.tfvars"
 ```
+
+## Screenshots
+
+Conforme podemos ver na imagem abaixo, o karpenter escalonou o cluster para atender a demanda:
+![Karpenter Scale](https://raw.githubusercontent.com/Bruna0092/Lab-Karpenter/49069f858ec012ca290144d9536c5447b7985f3e/img/karpenter-35-pods.png)
+
+Já aqui, é identificado que as não existe mais a necessidade dos nodes, então as máquinas são automaticamente terminadas:
+![Karpenter ScaleDown](https://raw.githubusercontent.com/Bruna0092/Lab-Karpenter/refs/heads/main/img/karpenter-termination-nodes.png)
